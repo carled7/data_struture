@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+//#include <ctype.h>
 #include <string.h>
 
 void inputStr(char* str){
@@ -10,11 +11,14 @@ void inputStr(char* str){
 char* mallocStr(char* str){
     int N = strlen(str);
     char* output = malloc(sizeof(char) * N);
-    for (int i = 0; i < N; i++){
-        if(output[i] < 123 && output[i] > 96){
-            output[i] -= 32;
+    strcpy(output, str);
+    for(int i = 0; i < N; i++){
+        if(output[i] > 64 && output[i] < 91){
+            continue;
         }
+        output[i] -= 32;
     }
+    printf("%s", output);
     return output;
 }
 
@@ -23,8 +27,8 @@ int main (){
     inputStr(str);
     char* strDinamic = mallocStr(str);
     
-    printf("%s\n", str);
-    printf("%s\n\n\n", strDinamic);
+    printf(" %s\n", str);
+    printf(" %s\n\n\n", strDinamic);
 
     return 0;
 }
