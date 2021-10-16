@@ -32,6 +32,9 @@ int* inputValues(int *n){
     scanf("%d", &*n);
 
     int* values = malloc(sizeof(int) * *n);
+    if(values == NULL){
+        printf("It was not possible to allocate memory\n");
+    }
 
     for(int i = 0; i < *n; i++){
         printf("\n- Number n%d: ", i + 1);
@@ -45,12 +48,10 @@ int main (){
 
     int n;
     int* values = inputValues(&n);
-    //for(int i = 0; i < 2; i++){
-    //    printf("\n- N n%d: %d", i + 1, values[i]);
-    //}
+    
     float average = calcAverage(values, &n);
     float variance = calcVariance(values, average, n);
-
+    free(values);
     printVariance(variance);
     
     return 0;
