@@ -1,21 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define SIZE 10
+#define SIZE 2
 #define LEN 50 
 
-void doubleSize(char* contacts[], char* numbers[], char* email[]){
-
-    realloc(contacts, sizeof(char) * SIZE * 2);
-    realloc(numbers, sizeof(char) * SIZE * 2);
-    realloc(email, sizeof(char) * SIZE * 2);
-
+void printContacts (char** contacts, char** numbers, char** email, int freeIndex){
+    char buffer;
+    system("clear");
+    printf("\n========== CONTACTS ==========\n");
+    for(int i = 0; i < freeIndex; ++i){
+        printf("\nName: %s\n", contacts[i]);
+        printf("Number: %s\n", numbers[i]);
+        if(email[i]){
+            printf("Email: %s\n", email[i]);
+        }
+        printf("\n");
+    }
+    printf("Press [0] to continue.\n");
+    scanf(" %c", &buffer);
 }
-void saveContact(char* contacts [], char* numbers [], char* email[], int *freeIndex){
+
+void doubleSize(char** contacts, char** numbers, char** email){
+
+    realloc(contacts, sizeof(char*) * SIZE * 2);
+    realloc(numbers, sizeof(char*) * SIZE * 2);
+    realloc(email, sizeof(char*) * SIZE * 2);
+    system("clear");
+    printf("reallocating memory...\n");
+    sleep(2);
+}
+void saveContact(char** contacts, char** numbers, char** email, int freeIndex){
     system("clear");
 
     char nameBuffer[LEN], numBuffer[LEN], emailBuffer[LEN], op;
-    printf("====== SAVE CONTACT ======\n");
+    printf("======== SAVE CONTACT ========\n");
     printf("Type the name: ");
     scanf(" %[^\n]s", nameBuffer); 
     printf("\nType the number: ");
@@ -26,65 +44,25 @@ void saveContact(char* contacts [], char* numbers [], char* email[], int *freeIn
     if(op == 'y'){
         printf("\nType the email: ");
         scanf(" %[^\n]s", emailBuffer);
-        email[*freeIndex] = malloc(sizeof(char*) * strlen(emailBuffer));
-        strcpy(email[*freeIndex], emailBuffer);
+        email[freeIndex] = malloc(sizeof(char) * strlen(emailBuffer));
+        strcpy(email[freeIndex], emailBuffer);
     }
 
-    contacts[*freeIndex] = malloc(sizeof(char*) * strlen(nameBuffer));
-    strcpy(contacts[*freeIndex], nameBuffer);
-    numbers[*freeIndex] = malloc(sizeof(char*) * strlen(numBuffer));
-    strcpy(numbers[*freeIndex], numBuffer);
+    contacts[freeIndex] = malloc(sizeof(char) * strlen(nameBuffer));
+    strcpy(contacts[freeIndex], nameBuffer);
+    numbers[freeIndex] = malloc(sizeof(char) * strlen(numBuffer));
+    strcpy(numbers[freeIndex], numBuffer);
 
 }
-/*
-void printContact(char contacts [][LEN], char numbers [][12], int printIndex){
-    system("clear");
-    printf("====== CONTACT ======\n");
-    printf("Name: %s\n", contacts[printIndex]);
-    printf("Number: %s\n", numbers[printIndex]);
-    sleep(2);
-}
 
-int searchContact(char contacts [][LEN], char numbers [][12], int *freeIndex){
-
-    char searchKey [LEN];
-    int searchIndexResult, currentSearchCorrespondence = 0, greaterSearchCorrespondence = 0;
-    printf("Type the name: ");
-    scanf(" %[^\n]s", searchKey);
-
-    for (int i = 0; i < *freeIndex; ++i){
-        currentSearchCorrespondence = 0;
-        for (int t = 0; contacts[i][t] != '\0'; ++t){
-            if(searchKey[t] == contacts[i][t]){
-                ++currentSearchCorrespondence;
-            }
-        }
-        if(currentSearchCorrespondence > greaterSearchCorrespondence){
-            greaterSearchCorrespondence = currentSearchCorrespondence;
-            searchIndexResult = i;
-        }
-    }
-    return searchIndexResult;
-}
-
-void deleteContact(char contacts [][LEN], char numbers [][12], int deleteIndex, int *freeIndex){
-    for (int i = deleteIndex; i < *freeIndex; ++i){
-        strcpy(contacts[i], contacts[i + 1]);
-        strcpy(numbers[i], numbers[i + 1]);
-    }
-    --*freeIndex;
-    printf("Contact deleted\n");
-    sleep(2);
-}
-*/
-
-int menu (char* contacts [], char* numbers [], char* email[],  int *freeIndex){
+int menu (char** contacts, char** numbers, char** email, int* freeIndex){
     system("clear");
 
     int buffer;
-    printf("======= AGENDA =======\n");
+
+    printf("=========== AGENDA ===========\n");
     printf("[1] - Save a contact\n");
-    printf("[2] - Search contact\n");
+    printf("[2] - Show contacts\n");
     printf("[3] - Delete contact\n");
     printf("[0] - Exit\n");
     printf("    --> ");
@@ -93,33 +71,30 @@ int menu (char* contacts [], char* numbers [], char* email[],  int *freeIndex){
     switch (buffer)
     {
     case 1:
-        saveContact(contacts, numbers, email, &*freeIndex);
-        ++*freeIndex;
-        if(*freeIndex == (strlen(*contacts) - 1)){
-            //doubleSize(contacts, numbers, email);
+        saveContact(contacts, numbers, email, *freeIndex);
+        *freeIndex += 1;
+        if(*freeIndex == SIZE){
+            doubleSize(contacts, numbers, email);
         }
         break;
     case 2:
         system("clear");
-        printf("======== SEARCH ========\n");
-        //printContact(contacts, numbers, searchContact(contacts, numbers, &*freeIndex));
+        printContacts(contacts, numbers, email, *freeIndex);
         break;
-    case 3:
-        system("clear");
-        printf("======== DELETE ========\n");
-        //int toDelete = searchContact(contacts, numbers, &*freeIndex);
-        //deleteContact(contacts, numbers, toDelete, &*freeIndex);
-        break;
+   
     }
     
     return buffer;
 }
 
 int main (){
-    char* contacts [SIZE];
-    char* numbers [SIZE];
-    char* email[SIZE];
+    char **contacts;
+    char **numbers;
+    char **email;
     int freeIndex = 0;
+    contacts = malloc(sizeof(char*) * SIZE);
+    numbers = malloc(sizeof(char*) * SIZE);
+    email = malloc(sizeof(char*) * SIZE);
     int op = menu(contacts, numbers, email, &freeIndex);
 
     while (op != 0)
