@@ -63,7 +63,6 @@ int menu (char** contacts, char** numbers, char** email, int* freeIndex){
     printf("=========== AGENDA ===========\n");
     printf("[1] - Save a contact\n");
     printf("[2] - Show contacts\n");
-    printf("[3] - Delete contact\n");
     printf("[0] - Exit\n");
     printf("    --> ");
     scanf(" %d", &buffer);
