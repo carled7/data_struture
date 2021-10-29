@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node
+struct node
 {
     int info;
     struct node* next;
-}NODE;
+};
+
+typedef struct node NODE;
 
 NODE* createList(){
     NODE* first = NULL;
@@ -24,7 +26,7 @@ NODE* insertElem(NODE* list, int info){
 void passThroughList(NODE* list){
     NODE* aux;
 
-    for (aux = list; aux != NULL; aux->next)
+    for (aux = list; aux != NULL; aux = aux->next)
     {
         printf("%d", aux->info);
     }
@@ -34,7 +36,7 @@ void passThroughList(NODE* list){
 NODE* searchElem(NODE* list, int searchKey){
     NODE* aux;
 
-    for (aux = list; aux != NULL; aux->next)
+    for (aux = list; aux != NULL; aux = aux->next)
     {
         if(aux->info == searchKey){
             return aux;
@@ -77,24 +79,58 @@ void freeList(NODE* list){
         free(aux);
         aux = ref;
     }
+}
+
+void menu(NODE* list, int op){
+
+    switch (op)
+    {
+    case 1:
+        list = createList();
+        system("clear");
+        printf("List created\n");
+        //sleep(2);
+        break;
+    case 2:
+        system("clear");
+        int num;
+        printf("Type the number to insert: ");
+        scanf(" %d", &num);
+        list = insertElem(list, num);
+        printf("Number has been inserted\n");
+        //sleep(2);
+        break;
+    case 3:
+        system("clear");
+        passThroughList(list);
+        break;
+    case 4:
+        /* code */
+        break;
+    case 5:
+        /* code */
+        break;
     
+    }
 
 }
 
 int main (){
 
     int op;
+    NODE* list;
     do{
+        system("clear");
         printf("[1] - Create list\n");
         printf("[2] - Insert element\n");
         printf("[3] - Print list\n");
         printf("[4] - Search element\n");
         printf("[5] - Remove element\n");
         scanf("%d", &op);
+
+        menu(list, op);
+
     }while(op != 0);
-
-
-
 
     return 0;
 }
