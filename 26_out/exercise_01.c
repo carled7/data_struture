@@ -25,10 +25,11 @@ NODE* insertElem(NODE* list, int info){
 
 void passThroughList(NODE* list){
     NODE* aux;
-
+    int i = 0;
     for (aux = list; aux != NULL; aux = aux->next)
     {
-        printf("%d", aux->info);
+        ++i;
+        printf("[%d] - %d\n", i, aux->info);
     }
     
 }
@@ -81,44 +82,10 @@ void freeList(NODE* list){
     }
 }
 
-void menu(NODE* list, int op){
+void menu(NODE* list){
 
-    switch (op)
-    {
-    case 1:
-        list = createList();
-        system("clear");
-        printf("List created\n");
-        //sleep(2);
-        break;
-    case 2:
-        system("clear");
-        int num;
-        printf("Type the number to insert: ");
-        scanf(" %d", &num);
-        list = insertElem(list, num);
-        printf("Number has been inserted\n");
-        //sleep(2);
-        break;
-    case 3:
-        system("clear");
-        passThroughList(list);
-        break;
-    case 4:
-        /* code */
-        break;
-    case 5:
-        /* code */
-        break;
-    
-    }
+    int op, buffer;
 
-}
-
-int main (){
-
-    int op;
-    NODE* list;
     do{
         system("clear");
         printf("[1] - Create list\n");
@@ -126,11 +93,65 @@ int main (){
         printf("[3] - Print list\n");
         printf("[4] - Search element\n");
         printf("[5] - Remove element\n");
+        printf("[0] - Exit ");
         scanf("%d", &op);
 
-        menu(list, op);
-
+        switch (op)
+        {
+        case 1:
+            list = createList();
+            system("clear");
+            printf("List created\n");
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
+            break;
+        case 2:
+            system("clear");
+            int num;
+            printf("Type the number to insert: ");
+            scanf(" %d", &num);
+            list = insertElem(list, num);
+            printf("Number has been inserted\n");
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
+            break;
+        case 3:
+            system("clear");
+            passThroughList(list);
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
+            break;
+        case 4:
+            system("clear");
+            int toSearch;
+            printf("Type the number to search: ");
+            scanf(" %d", &toSearch);
+            NODE* result = searchElem(list, toSearch);
+            printf("Result: %d", result->info);
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
+            break;
+        case 5:
+            system("clear");
+            int toDel;
+            printf("Type the number to delete: ");
+            scanf(" %d", &toDel);
+            list = removeElem(list, toDel);
+            printf("The element has been removed\n");
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
+            break;
+        
+        }
     }while(op != 0);
+    freeList(list);
+}
+
+int main (){
+
+    NODE* list;
+           
+    menu(list);
 
     return 0;
 }
