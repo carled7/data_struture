@@ -14,13 +14,27 @@ NODE* createList(){
     return first;
 }
 
-NODE* insertElem(NODE* list, int info){
+NODE* insertElemStart(NODE* list, int info){
     NODE* newELem = malloc(sizeof(NODE));
 
     newELem->info = info;
     newELem->next = list;
 
     return newELem;
+}
+
+void insertElemEnd(NODE* list, int info){
+
+    NODE* current = list;
+
+    while(current->next != NULL){
+        current = current->next;
+    }
+
+    current->next = malloc(sizeof(NODE));
+    current->next->info = info;
+    current->next->next = NULL;
+
 }
 
 void passThroughList(NODE* list){
@@ -93,6 +107,7 @@ void menu(NODE* list){
         printf("[3] - Print list\n");
         printf("[4] - Search element\n");
         printf("[5] - Remove element\n");
+        printf("[6] - Insert element at the end\n");
         printf("[0] - Exit ");
         scanf("%d", &op);
 
@@ -110,7 +125,7 @@ void menu(NODE* list){
             int num;
             printf("Type the number to insert: ");
             scanf(" %d", &num);
-            list = insertElem(list, num);
+            list = insertElemStart(list, num);
             printf("Number has been inserted\n");
             printf("\n\n[0] - Back ");
             scanf("%d", &buffer);
@@ -141,7 +156,15 @@ void menu(NODE* list){
             printf("\n\n[0] - Back ");
             scanf("%d", &buffer);
             break;
-        
+        case 6:
+            system("clear");
+            int numAtEnd;
+            printf("Type the number to insert: ");
+            scanf(" %d", &numAtEnd);
+            insertElemEnd(list, numAtEnd);
+            printf("Number has been inserted\n");
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
         }
     }while(op != 0);
     freeList(list);
