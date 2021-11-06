@@ -23,6 +23,20 @@ NODE* insertElemStart(NODE* list, int info){
     return newELem;
 }
 
+void insertElemEnd(NODE* list, int info){
+
+    NODE* current = list;
+
+    while(current->next != NULL){
+        current = current->next;
+    }
+
+    current->next = malloc(sizeof(NODE));
+    current->next->info = info;
+    current->next->next = NULL;
+
+}
+
 void passThroughList(NODE* list){
     NODE* aux;
     int i = 0;
@@ -70,6 +84,33 @@ NODE* removeElem(NODE* list, int deleteKey){
     return list;
 }
 
+NODE* removeSpecificElem(NODE* list, int deleteKey){
+    NODE* aux = list;
+    NODE* ant = NULL;
+    int index = 0;
+    --deleteKey;
+
+    while ( aux != NULL && index != deleteKey){
+        ant = aux;
+        aux = aux->next;
+        ++index;
+    }
+
+    if ( aux == NULL ){
+        return list;
+    }
+
+    if (ant == NULL){
+        list = aux->next;
+    } else {
+        ant->next = aux->next;
+    }   
+    
+    free (aux);
+
+    return list;
+}
+
 void freeList(NODE* list){
     NODE* aux = list;
     NODE* ref;
@@ -93,6 +134,8 @@ void menu(NODE* list){
         printf("[3] - Print list\n");
         printf("[4] - Search element\n");
         printf("[5] - Remove element\n");
+        printf("[6] - Insert element at the end\n");
+        printf("[7] - Remove specific\n");
         printf("[0] - Exit ");
         scanf("%d", &op);
 
@@ -137,6 +180,26 @@ void menu(NODE* list){
             printf("Type the number to delete: ");
             scanf(" %d", &toDel);
             list = removeElem(list, toDel);
+            printf("The element has been removed\n");
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
+            break;
+        case 6:
+            system("clear");
+            int numAtEnd;
+            printf("Type the number to insert: ");
+            scanf(" %d", &numAtEnd);
+            insertElemEnd(list, numAtEnd);
+            printf("Number has been inserted\n");
+            printf("\n\n[0] - Back ");
+            scanf("%d", &buffer);
+            break;
+        case 7:
+            system("clear");
+            int indesToDel;
+            printf("Type the number's index to delete: ");
+            scanf(" %d", &indesToDel);
+            list = removeSpecificElem(list, indesToDel);
             printf("The element has been removed\n");
             printf("\n\n[0] - Back ");
             scanf("%d", &buffer);
