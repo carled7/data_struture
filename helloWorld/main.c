@@ -7,6 +7,6 @@ int main (){
     int b = 90;
     int c;
     c = a * b;
-    
+
     return 0;
 }
