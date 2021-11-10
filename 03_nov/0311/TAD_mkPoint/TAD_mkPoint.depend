@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1636507873 source:d:\iftm\2nd period\estrutura de dados\0311\tad_mkpoint\tad_mkpoint.c
+	"TAD_mkPoint.h"
+	<stdlib.h>
+
+1636507645 d:\iftm\2nd period\estrutura de dados\0311\tad_mkpoint\tad_mkpoint.h
+
+1636508010 source:d:\iftm\2nd period\estrutura de dados\0311\tad_mkpoint\main.c
+	<stdlib.h>
+	<stdio.h>
+	"TAD_mkPoint.h"
+
