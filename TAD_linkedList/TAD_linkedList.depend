@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1637184589 source:d:\iftm\2nd period\estrutura de dados\0311\tad_linkedlist\main.c
+	<stdio.h>
+	<stdlib.h>
+	"TAD_linkedList.h"
+
+1637186180 d:\iftm\2nd period\estrutura de dados\0311\tad_linkedlist\tad_linkedlist.h
+
+1637184588 source:d:\iftm\2nd period\estrutura de dados\0311\tad_linkedlist\tad_linkedlist.c
+	"TAD_linkedList.h"
+	<stdlib.h>
+	<stdio.h>
+
