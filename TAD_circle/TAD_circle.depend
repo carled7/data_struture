@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1637113627 source:d:\iftm\2nd period\estrutura de dados\0311\tad_circle\main.c
+	"TAD_circle.h"
+	<stdlib.h>
+	<stdio.h>
+
+1637113618 d:\iftm\2nd period\estrutura de dados\0311\tad_circle\tad_circle.h
+
+1637113584 source:d:\iftm\2nd period\estrutura de dados\0311\tad_circle\tad_circle.c
+	"TAD_circle.h"
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+
